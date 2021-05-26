@@ -36,7 +36,7 @@ public class PersonController {
     public Person setPerson(@PathVariable long id, @RequestBody Person newPerson) {
         return personRepository.findById(id).map(person -> {
 
-            person.setName(newPerson.getName());
+            person.setPersonName(newPerson.getPersonName());
             person.setInn(newPerson.getInn());
             person.setTelephone(newPerson.getTelephone());
             person.setRegionCode(newPerson.getRegionCode());

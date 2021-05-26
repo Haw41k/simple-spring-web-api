@@ -9,45 +9,45 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    private String name;
+    private String personName;
 
     @Column(unique = true)
-    private long inn;
+    private Long inn;
 
     @Column(unique = true, nullable = false)
-    private long telephone;
+    private Long telephone;
 
-    private int regionCode;
+    private Integer regionCode;
     private String regionName;
     private String cityName;
     private String streetName;
-    private int houseNumber;
-    private int houseCorpsNumber;
-    private int houseRoomNumber;
+    private Integer houseNumber;
+    private Integer houseCorpsNumber;
+    private Integer houseRoomNumber;
 
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "PERSON_ID")
     private Set<PersonOrder> orders;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getPersonName() {
+        return personName;
     }
 
-    public long getInn() {
+    public Long getInn() {
         return inn;
     }
 
-    public long getTelephone() {
+    public Long getTelephone() {
         return telephone;
     }
 
-    public int getRegionCode() {
+    public Integer getRegionCode() {
         return regionCode;
     }
 
@@ -63,31 +63,31 @@ public class Person {
         return streetName;
     }
 
-    public int getHouseNumber() {
+    public Integer getHouseNumber() {
         return houseNumber;
     }
 
-    public int getHouseCorpsNumber() {
+    public Integer getHouseCorpsNumber() {
         return houseCorpsNumber;
     }
 
-    public int getHouseRoomNumber() {
+    public Integer getHouseRoomNumber() {
         return houseRoomNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
-    public void setInn(long inn) {
+    public void setInn(Long inn) {
         this.inn = inn;
     }
 
-    public void setTelephone(long telephone) {
+    public void setTelephone(Long telephone) {
         this.telephone = telephone;
     }
 
-    public void setRegionCode(int regionCode) {
+    public void setRegionCode(Integer regionCode) {
         this.regionCode = regionCode;
     }
 
@@ -103,15 +103,15 @@ public class Person {
         this.streetName = streetName;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(Integer houseNumber) {
         this.houseNumber = houseNumber;
     }
 
-    public void setHouseCorpsNumber(int houseCorpsNumber) {
+    public void setHouseCorpsNumber(Integer houseCorpsNumber) {
         this.houseCorpsNumber = houseCorpsNumber;
     }
 
-    public void setHouseRoomNumber(int houseRoomNumber) {
+    public void setHouseRoomNumber(Integer houseRoomNumber) {
         this.houseRoomNumber = houseRoomNumber;
     }
 
@@ -120,8 +120,8 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id
-                && Objects.equals(name, person.name)
+        return id.equals(person.id)
+                && Objects.equals(personName, person.personName)
                 && Objects.equals(inn, person.inn)
                 && Objects.equals(telephone, person.telephone)
                 && Objects.equals(regionCode, person.regionCode)
@@ -136,7 +136,7 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(
-                id, name, inn, telephone, regionCode, regionName, cityName,
+                id, personName, inn, telephone, regionCode, regionName, cityName,
                 streetName, houseNumber, houseCorpsNumber, houseRoomNumber
         );
     }
@@ -145,7 +145,7 @@ public class Person {
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + personName + '\'' +
                 ", inn=" + inn +
                 ", telephone=" + telephone +
                 ", regionCode=" + regionCode +

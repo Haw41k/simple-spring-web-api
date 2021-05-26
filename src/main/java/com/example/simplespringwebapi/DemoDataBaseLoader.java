@@ -24,7 +24,7 @@ public class DemoDataBaseLoader {
             for (int i = 0; i < 5; i++) {
                 Person person = new Person();
 
-                person.setName("User_" + i);
+                person.setPersonName("User_" + i);
                 person.setInn(910200000000L + i);
                 person.setTelephone(79789090000L + i);
                 person.setRegionCode(91);
@@ -41,9 +41,9 @@ public class DemoDataBaseLoader {
             for (int i = 0; i < 4; i++) {
                 PersonOrder order = new PersonOrder();
 
-                order.setPersonId(1);
+                order.setPersonId(1L);
                 order.setDescription("Заказ номер " + i + ". [товары]");
-                order.setSum(new BigDecimal(54.2F * (i + 2)).setScale(2, RoundingMode.DOWN));
+                order.setSum(BigDecimal.valueOf(54.2F * (i + 2)).setScale(2, RoundingMode.DOWN));
 
                 log.info("added new:\n" + orderRepository.save(order));
             }

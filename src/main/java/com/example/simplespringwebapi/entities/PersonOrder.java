@@ -11,21 +11,21 @@ public class PersonOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "PERSON_ID")
-    private long personId;
+    private Long personId;
 
     @CreationTimestamp
     private LocalDateTime creationDate;
     private String description;
     private BigDecimal sum;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getPersonId() {
+    public Long getPersonId() {
         return personId;
     }
 
@@ -41,7 +41,7 @@ public class PersonOrder {
         return sum;
     }
 
-    public void setPersonId(long personId) {
+    public void setPersonId(Long personId) {
         this.personId = personId;
     }
 
@@ -58,8 +58,8 @@ public class PersonOrder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PersonOrder that = (PersonOrder) o;
-        return id == that.id
-                && personId == that.personId
+        return id.equals(that.id)
+                && personId.equals(that.personId)
                 && Objects.equals(creationDate, that.creationDate)
                 && Objects.equals(description, that.description)
                 && Objects.equals(sum, that.sum);
