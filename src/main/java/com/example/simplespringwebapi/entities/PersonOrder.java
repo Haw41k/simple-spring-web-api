@@ -1,5 +1,6 @@
 package com.example.simplespringwebapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class PersonOrder {
     @Column(name = "PERSON_ID")
     private Long personId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @CreationTimestamp
     private LocalDateTime creationDate;
     private String description;
