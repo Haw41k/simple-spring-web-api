@@ -4,19 +4,16 @@ import com.example.simplespringwebapi.entities.Person;
 import com.example.simplespringwebapi.exceptions.ElementNotFoundException;
 import com.example.simplespringwebapi.repositories.PersonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,6 +26,11 @@ public class PersonControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @AfterEach
+    public void deleteAll(){
+        personRepository.deleteAll();
+    }
+
     @Test
     public void getPersons() throws Exception {
         Person person = createNewTestPerson();
@@ -38,8 +40,6 @@ public class PersonControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(personRepository.findAll())));
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -50,8 +50,6 @@ public class PersonControllerTests {
         mockMvc.perform(get("/api/persons/{id}", person.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(person)));
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -85,8 +83,6 @@ public class PersonControllerTests {
                 .andExpect(jsonPath("$.houseNumber").value(person.getHouseNumber()))
                 .andExpect(jsonPath("$.houseCorpsNumber").value(person.getHouseCorpsNumber()))
                 .andExpect(jsonPath("$.houseRoomNumber").value(person.getHouseRoomNumber()));
-
-        personRepository.delete(personRepository.findByTelephone(person.getTelephone()).get());
     }
 
     @Test
@@ -102,8 +98,6 @@ public class PersonControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isConflict());
-
-        personRepository.delete(person2);
     }
 
     @Test
@@ -119,8 +113,6 @@ public class PersonControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isConflict());
-
-        personRepository.delete(person2);
     }
 
     @Test
@@ -137,8 +129,6 @@ public class PersonControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isConflict());
-
-        personRepository.delete(person2);
     }
 
     @Test
@@ -155,8 +145,6 @@ public class PersonControllerTests {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(person)));
-
-        personRepository.delete(person);
     }
 
     @Test
