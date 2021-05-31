@@ -6,6 +6,7 @@ import com.example.simplespringwebapi.exceptions.ElementNotFoundException;
 import com.example.simplespringwebapi.repositories.PersonOrderRepository;
 import com.example.simplespringwebapi.repositories.PersonRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,6 +35,12 @@ public class PersonOrderControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @AfterEach
+    public void deleteAll() {
+        orderRepository.deleteAll();
+        personRepository.deleteAll();
+    }
+
     @Test
     public void getOrders() throws Exception {
         Person person = createNewTestPerson();
@@ -46,8 +53,6 @@ public class PersonOrderControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(orderRepository.findAll())));
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -62,8 +67,6 @@ public class PersonOrderControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(order)));
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -92,8 +95,6 @@ public class PersonOrderControllerTests {
                 .andExpect(jsonPath("$.personId").value(order.getPersonId()))
                 .andExpect(jsonPath("$.sum").value(order.getSum().doubleValue()))
                 .andExpect(jsonPath("$.description").value(order.getDescription()));
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -127,8 +128,6 @@ public class PersonOrderControllerTests {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(order)));
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -145,8 +144,6 @@ public class PersonOrderControllerTests {
 
         mockMvc.perform(get("/api/orders/{id}", order.getId()))
                 .andExpect(status().isNotFound());
-
-        personRepository.delete(person);
     }
 
     @Test
@@ -193,8 +190,6 @@ public class PersonOrderControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(orders)));
-
-        personRepository.delete(person);
     }
 
 
